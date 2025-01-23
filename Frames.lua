@@ -405,7 +405,6 @@ Addon.FRAMES.PopUpMessage = function( self,VarData,Parent,Handler )
     Frame:SetToplevel( true );
     Frame:SetSize( 300,150 );
     Frame:SetPoint( 'CENTER' );
-
     local ButtData = {
         Name = Key,
         DisplayText = 'OK',
@@ -436,6 +435,14 @@ Addon.FRAMES.PopUpMessage = function( self,VarData,Parent,Handler )
 
     local TextTheme = Addon.Theme.Text;
     local r,g,b,a = TextTheme.r,TextTheme.g,TextTheme.b,1;
+
+    if( VarData.Label ) then
+        local Label = Frame:CreateFontString( nil,'ARTWORK','GameFontNormalSmall' );
+        Label:SetTextColor( r,g,b,a );
+        Label:SetSize( Frame:GetWidth()/2,0 );
+        Label:SetPoint( 'TOP','LEFT' );
+        Label:SetText( VarData.Label );
+    end
 
     Text:SetTextColor( r,g,b,a );
     Text:SetSize( Frame:GetWidth()-10,0 );
@@ -480,6 +487,14 @@ Addon.FRAMES.AddMovable = function( self,VarData,Parent,Handler )
 
     local TextTheme = Addon.Theme.Text;
     local r,g,b,a = TextTheme.r,TextTheme.g,TextTheme.b,1;
+
+    if( VarData.Label ) then
+        local Label = Frame:CreateFontString( nil,'ARTWORK','GameFontNormalSmall' );
+        Label:SetTextColor( r,g,b,a );
+        Label:SetSize( Frame:GetWidth()/2,0 );
+        Label:SetPoint( 'TOPLEFT',0,-10 );
+        Label:SetText( VarData.Label );
+    end
 
     Text:SetTextColor( r,g,b,a );
     Text:SetSize( Frame:GetWidth()-10,0 );
