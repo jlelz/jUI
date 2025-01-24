@@ -125,9 +125,9 @@ Addon.FRAMES.AddSeperator = function( self,Parent )
   return Texture;
 end
 
-Addon.FRAMES.AddBackGround = function( self,Parent )
+Addon.FRAMES.AddBackGround = function( self,Parent,Theme )
   local Texture = Parent:CreateTexture( nil,'BACKGROUND',nil,2 );
-  Texture:SetColorTexture( 41/255,33/255,36/255,.3 );
+  Texture:SetColorTexture( Theme.r,Theme.g,Theme.b,Theme.a );
   return Texture;
 end
 
