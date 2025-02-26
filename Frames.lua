@@ -401,8 +401,8 @@ end
 Addon.FRAMES.PopUpMessage = function( self,VarData,Parent,Handler )
     local Key = string.lower( VarData.Name );
     local Frame = CreateFrame( 'Frame',Key..'PopUp',Parent or UIParent );
-    Frame:SetFrameStrata( 'DIALOG' );
-    Frame:SetToplevel( true );
+    --Frame:SetFrameStrata( 'TOOLTIP' );
+    --Frame:SetToplevel( true );
     Frame:SetSize( 300,150 );
     Frame:SetPoint( 'CENTER' );
     local ButtData = {
@@ -437,11 +437,11 @@ Addon.FRAMES.PopUpMessage = function( self,VarData,Parent,Handler )
     local r,g,b,a = TextTheme.r,TextTheme.g,TextTheme.b,1;
 
     if( VarData.Label ) then
-        local Label = Frame:CreateFontString( nil,'ARTWORK','GameFontNormalSmall' );
-        Label:SetTextColor( r,g,b,a );
-        Label:SetSize( Frame:GetWidth()/2,0 );
-        Label:SetPoint( 'TOP','LEFT' );
-        Label:SetText( VarData.Label );
+        Frame.Label = Frame:CreateFontString( nil,'ARTWORK','GameFontNormalSmall' );
+        Frame.Label:SetTextColor( r,g,b,a );
+        Frame.Label:SetSize( Frame:GetWidth()/2,0 );
+        Frame.Label:SetPoint( 'TOPLEFT',Frame,'TOPLEFT',0,-10 );
+        Frame.Label:SetText( VarData.Label );
     end
 
     Text:SetTextColor( r,g,b,a );
@@ -460,8 +460,8 @@ end
 Addon.FRAMES.AddMovable = function( self,VarData,Parent,Handler )
     local Key = string.lower( VarData.Name );
     local Frame = CreateFrame( 'Frame',Key..'Moving',Parent or UIParent );
-    Frame:SetFrameStrata( 'DIALOG' );
-    Frame:SetToplevel( true );
+    --Frame:SetFrameStrata( 'TOOLTIP' );
+    --Frame:SetToplevel( true );
     Frame:SetSize( 300,150 );
     Frame:SetPoint( 'CENTER' );
     Frame:EnableMouse( true );
@@ -489,11 +489,11 @@ Addon.FRAMES.AddMovable = function( self,VarData,Parent,Handler )
     local r,g,b,a = TextTheme.r,TextTheme.g,TextTheme.b,1;
 
     if( VarData.Label ) then
-        local Label = Frame:CreateFontString( nil,'ARTWORK','GameFontNormalSmall' );
-        Label:SetTextColor( r,g,b,a );
-        Label:SetSize( Frame:GetWidth()/2,0 );
-        Label:SetPoint( 'TOPLEFT',0,-10 );
-        Label:SetText( VarData.Label );
+        Frame.Label = Frame:CreateFontString( nil,'ARTWORK','GameFontNormalSmall' );
+        Frame.Label:SetTextColor( r,g,b,a );
+        Frame.Label:SetSize( Frame:GetWidth()/2,0 );
+        Frame.Label:SetPoint( 'TOPLEFT',Frame,'TOPLEFT',0,-10 );
+        Frame.Label:SetText( VarData.Label );
     end
 
     Text:SetTextColor( r,g,b,a );
