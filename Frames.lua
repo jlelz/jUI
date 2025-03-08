@@ -460,7 +460,7 @@ end
 Addon.FRAMES.AddMovable = function( self,VarData,Parent,Handler )
     local Key = string.lower( VarData.Name );
     local Frame = CreateFrame( 'Frame',Key..'Moving',Parent or UIParent );
-    --Frame:SetFrameStrata( 'TOOLTIP' );
+    Frame:SetFrameStrata( 'TOOLTIP' );
     --Frame:SetToplevel( true );
     Frame:SetSize( 300,150 );
     Frame:SetPoint( 'CENTER' );
