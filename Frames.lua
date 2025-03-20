@@ -477,26 +477,26 @@ Addon.FRAMES.AddMovable = function( self,VarData,Parent,Handler )
     end );
 
     local BGTheme = Addon.Theme.Background;
-    local r,g,b,a = BGTheme.r,BGTheme.g,BGTheme.b,0.5;
+    local r,g,b,BGA = BGTheme.r,BGTheme.g,BGTheme.b,VarData.BGA or 1;
 
     Frame.Texture = Frame:CreateTexture();
     Frame.Texture:SetAllPoints( Frame );
-    Frame.Texture:SetColorTexture( r,g,b,a );
+    Frame.Texture:SetColorTexture( r,g,b,BGA );
 
     local Text = Frame:CreateFontString( nil,'ARTWORK','GameFontNormalSmall' );
 
     local TextTheme = Addon.Theme.Text;
-    local r,g,b,a = TextTheme.r,TextTheme.g,TextTheme.b,1;
+    local r,g,b,Texta = TextTheme.r,TextTheme.g,TextTheme.b,VarData.TextA or 1;
 
     if( VarData.Label ) then
         Frame.Label = Frame:CreateFontString( nil,'ARTWORK','GameFontNormalSmall' );
-        Frame.Label:SetTextColor( r,g,b,a );
+        Frame.Label:SetTextColor( r,g,b,Texta );
         Frame.Label:SetSize( Frame:GetWidth()/2,0 );
         Frame.Label:SetPoint( 'TOPLEFT',Frame,'TOPLEFT',0,-10 );
         Frame.Label:SetText( VarData.Label );
     end
 
-    Text:SetTextColor( r,g,b,a );
+    Text:SetTextColor( r,g,b,Texta );
     Text:SetSize( Frame:GetWidth()-10,0 );
     Text:SetJustifyH( 'CENTER' );
     Text:SetJustifyV( 'MIDDLE' );
@@ -504,6 +504,15 @@ Addon.FRAMES.AddMovable = function( self,VarData,Parent,Handler )
     Text:SetWordWrap( true );
     Text:SetPoint( 'CENTER' );
     Text:SetText( VarData.Value );
+
+    Frame.Butt = CreateFrame( 'Button',nil,Frame,'UIPanelButtonTemplate' );
+    Frame.Butt:SetSize( 32,32 );
+    Frame.Butt:SetText( 'OK' );
+    Frame.Butt:SetScript( 'OnClick',function( self )
+        self:GetParent():Hide();
+    end );
+    Frame.Butt:SetPoint( 'topright',Frame,'topright',-10,-10 );
+    Frame.Butt:RegisterForClicks( 'AnyDown','AnyUp' );
 
     Frame:Show();
 
