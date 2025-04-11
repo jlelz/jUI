@@ -81,6 +81,11 @@ Addon.SliderRound = function( self,Val,ValStep )
   return floor( Val/ValStep )*ValStep;
 end
 
+Addon.IsVanilla = function( self )
+  local Version,Build,Date,TocVersion = GetBuildInfo();
+  return TocVersion <= 20000;
+end
+
 Addon.IsClassic = function( self )
   return ( WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE );
 end
