@@ -116,3 +116,7 @@ Addon.GiSub = function( self,s,pat,repl,n )
         return gsub( s,pat,repl );
     end
 end
+
+Addon.IsEmpty = function( self,Value )
+  return Value == nil or Value == '';
+end
