@@ -158,14 +158,17 @@ Addon.FRAMES.AddRange = function( self,VarData,Parent,Handler )
     local Point,RelativeFrame,RelativePoint,X,Y = Frame.High:GetPoint();
     Frame.High:SetPoint( Point,RelativeFrame,RelativePoint,X-5,Y-5 );
 
-    local Value = Handler.Get( Key );
+    -- Convert to numerical value
+    local Value = tonumber( Handler.Get( Key ) );
+    if( Value == nil ) then
+        Value = 0;
+    end
     --[[
     local Working,Error = pcall( Frame.SetValue,Value,TreatAsMouseEvent );
     if( not Working ) then
         print( 'FAILED!','Frame:SetValue',Key,Value,Error );
     end
     ]]
-    
     Frame:SetValue( Value );
     Frame.keyValue = Key;
     if( VarData.Flagged ) then
