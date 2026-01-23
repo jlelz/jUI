@@ -199,7 +199,7 @@ Addon.FRAMES.AddRange = function( self,VarData,Parent,Handler )
     ]]
 
     Frame.EditBox = CreateFrame( 'EditBox',Key..'SliderEditBox',Frame,'InputBoxTemplate' --[[and BackdropTemplate]] );
-    Frame.EditBox:SetSize( 40,15 );
+    Frame.EditBox:SetSize( 50,15 );
     --Frame.EditBox:GetFontString():SetJustifyH( 'center' );
     Frame.EditBox:ClearAllPoints();
     Frame.EditBox:SetPoint( 'center',Frame,'center',5,-14 );
