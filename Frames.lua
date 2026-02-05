@@ -118,9 +118,14 @@ Addon.FRAMES.AddTip = function( self,VarData,Parent,Theme )
     return FontString;
 end
 
-Addon.FRAMES.AddSeperator = function( self,Parent )
+Addon.FRAMES.AddSeparator = function( self,Parent,Theme )
   local Texture = Parent:CreateTexture( nil,'BACKGROUND',nil,2 );
-  Texture:SetColorTexture( 255/255,255/255,255/255,.1 );
+  Texture:SetColorTexture(
+        Theme.r,
+        Theme.g,
+        Theme.b,
+        Theme.a
+  );
   Texture:SetSize( Parent:GetWidth(),.5 );
   return Texture;
 end
