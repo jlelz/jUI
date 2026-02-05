@@ -204,7 +204,8 @@ Addon.FRAMES.AddRange = function( self,VarData,Parent,Handler )
     Frame.EditBox:ClearAllPoints();
     Frame.EditBox:SetPoint( 'center',Frame,'center',5,-14 );
     Frame.EditBox:SetText( Value );
-    Frame.EditBox:SetTextInsets(10, 10, 2, 2 );
+    Frame.EditBox:SetTextInsets( 10,10,2,2 );
+    Frame.EditBox:SetCursorPosition( 0 );
     Frame.EditBox:Disable();
 
     Frame:SetScript( 'OnValueChanged',function( self,Value,UserInput )
