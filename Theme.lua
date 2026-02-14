@@ -2,7 +2,7 @@ local _,Addon = ...;
 
 Addon.Theme = {
     Text = {
-        Hex = 'ffffff',
+        Hex = '585858',
     },
     Debug = {
         Hex = 'cccccc',
@@ -30,6 +30,9 @@ Addon.Theme = {
     },
     Sex = {
         Hex = 'b17a99',
+    },
+    Black = {
+        Hex = '000000',
     },
     Font = {
         Family = 'Fonts\\FRIZQT__.TTF',

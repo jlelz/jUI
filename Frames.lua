@@ -136,9 +136,13 @@ Addon.FRAMES.AddBackGround = function( self,Parent,Theme )
   return Texture;
 end
 
-Addon.FRAMES.AddRange = function( self,VarData,Parent,Handler )
+Addon.FRAMES.AddRange = function( self,VarData,Parent,Handler,Theme )
     local Key = string.lower( VarData.Name );
     local Frame = CreateFrame( 'Slider',Key..'Range',Parent,'UISliderTemplateWithLabels' );
+    Frame.Text:SetTextColor( Theme.r,Theme.g,Theme.b,Theme.a )
+    Frame.Low:SetTextColor( Theme.r,Theme.g,Theme.b,Theme.a );
+    Frame.High:SetTextColor( Theme.r,Theme.g,Theme.b,Theme.a );
+
     --[[
     local SliderBackdrop  = {
         bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
