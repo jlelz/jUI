@@ -16,9 +16,9 @@ end
 
 Addon.FRAMES.Notify = function( self,... )
     local Prefix = CreateColor(
-        Addon.Theme.Text.Colors.Notify.r,
-        Addon.Theme.Text.Colors.Notify.g,
-        Addon.Theme.Text.Colors.Notify.b
+        Addon.Theme.Text.Colors.Highlight.r,
+        Addon.Theme.Text.Colors.Highlight.g,
+        Addon.Theme.Text.Colors.Highlight.b
     ):WrapTextInColorCode( AddonName );
 
     _G[ 'DEFAULT_CHAT_FRAME' ]:AddMessage( string.join( ' ', Prefix, ... ) );
@@ -84,21 +84,22 @@ Addon.FRAMES.AddLabel = function( self,VarData,Parent,Color )
     return FontString;
 end
 
-Addon.FRAMES.AddTip = function( self,VarData,Parent )
+Addon.FRAMES.AddTip = function( self,VarData,Parent,Color )
     local FontString = Parent:CreateFontString( nil,'ARTWORK','GameFontHighlightSmall' );
     FontString:SetFont( Addon.Theme.Font.Family, Addon.Theme.Font.Normal, Addon.Theme.Font.Flags );
     FontString:SetText( VarData.DisplayText );
     if( VarData.Flagged ) then
         FontString:SetTextColor( 
-            Addon.Theme.Disabled.r,
-            Addon.Theme.Disabled.g,
-            Addon.Theme.Disabled.b
+            Addon.Theme.Text.Colors.Disabled.r,
+            Addon.Theme.Text.Colors.Disabled.g,
+            Addon.Theme.Text.Colors.Disabled.b
         );
     else
+        local Color = Color or Addon.Theme.Text.Colors.Default;
         FontString:SetTextColor( 
-            Addon.Theme.Text.Colors.Default.r,
-            Addon.Theme.Text.Colors.Default.g,
-            Addon.Theme.Text.Colors.Default.b,
+            Color.r,
+            Color.g,
+            Color.b,
             Addon.Theme.Text.Alpha
         );
     end
@@ -146,9 +147,13 @@ Addon.FRAMES.AddBackGround = function( self,Parent )
     return Texture;
 end
 
-Addon.FRAMES.AddRange = function( self,VarData,Parent,Handler )
-    local Key = string.lower( VarData.Name );
+Addon.FRAMES.AddRange = function( self,VarData,Parent,Handler,Color )
+    local Key = AddonName..'Slider';
+    if( VarData and VarData.Name ) then
+        Key = string.lower( VarData.Name );
+    end
     local Frame = CreateFrame( 'Slider',Key..'Range',Parent,'UISliderTemplateWithLabels' );
+    local Color = Color or Addon.Theme.Text.Colors.Default;
     Frame.Text:SetTextColor( 
         Addon.Theme.Text.Colors.Highlight.r,
         Addon.Theme.Text.Colors.Highlight.g,
@@ -244,9 +249,9 @@ Addon.FRAMES.AddRange = function( self,VarData,Parent,Handler )
         Addon.Theme.Font.Family, Addon.Theme.Font.Normal, Addon.Theme.Font.Flags
     );
     Frame.EditBox:SetTextColor( 
-        Addon.Theme.Text.Colors.Default.r,
-        Addon.Theme.Text.Colors.Default.g,
-        Addon.Theme.Text.Colors.Default.b,
+        Color.r,
+        Color.g,
+        Color.b,
         Addon.Theme.Text.Alpha
     );
     Frame.EditBox:Disable();
@@ -269,7 +274,10 @@ Addon.FRAMES.AddRange = function( self,VarData,Parent,Handler )
 end
 
 Addon.FRAMES.AddToggle = function( self,VarData,Parent )
-    local Key = string.lower( VarData.Name );
+    local Key = AddonName..'Toggle';
+    if( VarData and VarData.Name ) then
+        Key = string.lower( VarData.Name );
+    end
     local Frame = CreateFrame( 'CheckButton',Key..'Toggle',Parent,'UICheckButtonTemplate' );
     if( VarData.Flagged ) then
         Frame:Disable();
@@ -279,7 +287,10 @@ Addon.FRAMES.AddToggle = function( self,VarData,Parent )
 end
 
 Addon.FRAMES.AddVarToggle = function( self,VarData,Parent,Handler )
-    local Key = string.lower( VarData.Name );
+    local Key = AddonName..'VarToggle';
+    if( VarData and VarData.Name ) then
+        Key = string.lower( VarData.Name );
+    end
     local Frame = CreateFrame( 'CheckButton',Key..'Toggle',Parent,'UICheckButtonTemplate' );
     Frame:SetChecked( Addon:Int2Bool( Handler:GetVarValue( Key ) ) );
     Frame.keyValue = Key;
@@ -298,7 +309,10 @@ Addon.FRAMES.AddRadio = function( self,VarData,Parent,Handler )
 end
 
 Addon.FRAMES.AddCheckBox = function( self,VarData,Parent,Handler )
-    local Key = string.lower( VarData.Name );
+    local Key = AddonName..'CheckBox';
+    if( VarData and VarData.Name ) then
+        Key = string.lower( VarData.Name );
+    end
     local Frame = CreateFrame( 'CheckButton',Key..'Toggle',Parent,'ChatConfigCheckButtonTemplate' );
     Frame:SetChecked( Addon:Int2Bool( Handler:GetVarValue( Key ) ) );
     Frame.keyValue = Key;
@@ -319,7 +333,10 @@ Addon.FRAMES.AddCheckBox = function( self,VarData,Parent,Handler )
 end
 
 Addon.FRAMES.AddButton = function( self,VarData,Parent )
-    local Key = string.lower( VarData.Name );
+    local Key = AddonName..'Button';
+    if( VarData and VarData.Name ) then
+        Key = string.lower( VarData.Name );
+    end
     local Frame = CreateFrame( 'Button',Key..'Butt',Parent,'UIPanelButtonTemplate' );
     if( VarData.Flagged ) then
         Frame:Disable();
@@ -352,11 +369,14 @@ Addon.FRAMES.AddButton = function( self,VarData,Parent )
 end
 
 Addon.FRAMES.AddEdit = function( self,VarData,Parent,Handler )
-    local Key = string.lower( VarData.Name );
+    local Key = AddonName..'Edit';
+    if( VarData and VarData.Name ) then
+        Key = string.lower( VarData.Name );
+    end
     local Frame = CreateFrame( 'EditBox',Key..'Edit',Parent,'InputBoxTemplate' );
     Frame:SetAutoFocus( false );
     Frame:ClearFocus();
-    Frame:SetTextInsets( 0,0,3,3 );
+    --Frame:SetTextInsets( 10,10,10,10 );
     if( VarData.Flagged ) then
         Frame:Disable();
     end
@@ -388,7 +408,10 @@ Addon.FRAMES.AddEdit = function( self,VarData,Parent,Handler )
 end
 
 Addon.FRAMES.AddMultiEdit = function( self,VarData,Parent,Handler )
-    local Key = string.lower( VarData.Name );
+    local Key = AddonName..'MultiEdit';
+    if( VarData and VarData.Name ) then
+        Key = string.lower( VarData.Name );
+    end
     local Frame = CreateFrame( 'ScrollFrame',Key..'ScrollFrame',Parent,'UIPanelScrollFrameTemplate' );
     Frame:SetPoint( 'topleft',Parent,'topleft',0,0 );
 
@@ -433,9 +456,13 @@ Addon.FRAMES.AddMultiEdit = function( self,VarData,Parent,Handler )
     return Frame;
 end
 
-Addon.FRAMES.AddSelect = function( self,VarData,Parent,Handler )
-    local Key = string.lower( VarData.Name );
+Addon.FRAMES.AddSelect = function( self,VarData,Parent,Handler,Color )
+    local Key = AddonName..'Select';
+    if( VarData and VarData.Name ) then
+        Key = string.lower( VarData.Name );
+    end
     local Frame = CreateFrame( 'DropdownButton',Key..'Select',Parent,'WowStyle1DropdownTemplate' );
+    local Color = Color or Addon.Theme.Text.Colors.Default;
 
     Frame:SetupMenu(function( DropDown,Interface )
         for i,v in pairs( VarData.KeyPairs ) do
@@ -455,23 +482,20 @@ Addon.FRAMES.AddSelect = function( self,VarData,Parent,Handler )
         Frame:SetWidth( 120 );
     end
 
-    -- Create a custom font object for your addon if you haven't already
     local MyDropdownFont = CreateFont( 'MyDropdownFont' );
     MyDropdownFont:SetFont(
         Addon.Theme.Font.Family, Addon.Theme.Font.Normal, Addon.Theme.Font.Flags
     );
 
-    -- Apply it to the text region
     if( Frame.Text ) then
         Frame.Text:SetFontObject( MyDropdownFont );
-        -- This ensures the "Highlight" font doesn't take over with White
         Frame:SetNormalFontObject( MyDropdownFont );
         Frame:SetHighlightFontObject( MyDropdownFont );
 
         Frame.Text:SetTextColor(
-            Addon.Theme.Text.Colors.Default.r,
-            Addon.Theme.Text.Colors.Default.g,
-            Addon.Theme.Text.Colors.Default.b, -- Fixed your .g typo
+            Color.r,
+            Color.g,
+            Color.b,
             Addon.Theme.Text.Alpha
         );
     end
@@ -479,13 +503,21 @@ Addon.FRAMES.AddSelect = function( self,VarData,Parent,Handler )
     return Frame;
 end
 
-Addon.FRAMES.AddMovable = function( self,VarData,Parent,Handler )
-    local Key = string.lower( VarData.Name );
-    local Frame = CreateFrame( 'Frame',Key..'Moving',Parent or UIParent );
-    Frame:SetFrameStrata( 'TOOLTIP' );
-    --Frame:SetToplevel( true );
+Addon.FRAMES.AddFrame = function( self,VarData,Parent )
+    local Key = AddonName..'Frame';
+    if( VarData and VarData.Name ) then
+        Key = string.lower( VarData.Name );
+    end
+    local Frame = CreateFrame( 'Frame',Key..'Frame',Parent or UIParent );
     Frame:SetSize( 300,150 );
     Frame:SetPoint( 'CENTER' );
+    Frame:SetClampedToScreen( true );
+
+    return Frame;
+end
+
+Addon.FRAMES.AddMovable = function( self,VarData,Parent )
+    local Frame = self:AddFrame( VarData,Parent );
     Frame:EnableMouse( true );
     Frame:SetMovable( true );
     Frame:SetResizable( true );
@@ -498,14 +530,38 @@ Addon.FRAMES.AddMovable = function( self,VarData,Parent,Handler )
         self:SetUserPlaced( true );
     end );
 
-    Frame.Texture = Frame:CreateTexture();
-    Frame.Texture:SetAllPoints( Frame );
-    Frame.Texture:SetColorTexture( 
-        Addon.Theme.Background.Colors.Default.r,
-        Addon.Theme.Background.Colors.Default.g,
-        Addon.Theme.Background.Colors.Default.g,
-        Addon.Theme.Background.Alpha
-    );
+    return Frame;
+end
+
+Addon.FRAMES.AddMovableResizable = function( self,VarData,Parent )
+    local Key = AddonName..'MovableResizable';
+    if( VarData and VarData.Name ) then
+        Key = string.lower( VarData.Name );
+    end
+    local Frame = self:AddMovable( VarData,Parent );
+    Frame:SetResizable( true );
+    Frame.Resizer = CreateFrame( 'Button',Key..'Resizer', Frame );
+    Frame.Resizer:SetPoint( 'bottomright' );
+    Frame.Resizer:SetSize( 16,16 );
+    Frame.Resizer:SetNormalTexture( 'Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down' );
+    Frame.Resizer:SetHighlightTexture( 'Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight' );
+    Frame.Resizer:SetPushedTexture( 'Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up' );
+
+    Frame.Resizer:EnableMouse( true );
+    Frame.Resizer:RegisterForDrag( 'LeftButton' );
+    Frame.Resizer:SetScript( 'OnDragStart',function( self )
+        Frame:StartSizing( 'bottomright' );
+    end );
+    Frame.Resizer:SetScript( 'OnDragStop',function( self )
+        Frame:StopMovingOrSizing();
+    end );
+
+    return Frame;
+end
+
+Addon.FRAMES.AddAcknowledge = function( self,VarData,Parent )
+    local Frame = self:AddMovable( VarData,Parent );
+    Frame:SetFrameStrata( 'TOOLTIP' );
 
     local Text = Frame:CreateFontString( nil,'ARTWORK','GameFontNormalSmall' );
 
@@ -546,6 +602,48 @@ Addon.FRAMES.AddMovable = function( self,VarData,Parent,Handler )
     Frame.Butt:RegisterForClicks( 'AnyDown','AnyUp' );
 
     Frame:Show();
+
+    return Frame;
+end
+
+Addon.FRAMES.AddSearch = function( self,VarData,Parent )
+    local Key = AddonName..'Search';
+    if( VarData and VarData.Name ) then
+        Key = string.lower( VarData.Name );
+    end
+    local Frame = CreateFrame( 'EditBox',Key..'Search',Parent or UIParent,'SearchBoxTemplate' );
+    Frame:SetSize( 145,20 );
+    Frame.clearButton:Hide();
+    Frame:ClearFocus();
+    Frame:SetAutoFocus( false );
+
+    -- Input
+    local SearchFont = Frame:GetFontObject();
+    if( SearchFont ) then
+        SearchFont:SetFont( 
+            Addon.Theme.Font.Family,Addon.Theme.Font.Normal,Addon.Theme.Font.Flags 
+        );
+    end
+    Frame:SetTextColor(
+        Addon.Theme.Text.Colors.Default.r,
+        Addon.Theme.Text.Colors.Default.g,
+        Addon.Theme.Text.Colors.Default.b,
+        Addon.Theme.Text.Alpha
+    );
+
+    -- Instructions
+    local InstructionFont = Frame.Instructions:GetFontObject();
+    if( SearchFont ) then
+        SearchFont:SetFont( 
+            Addon.Theme.Font.Family,Addon.Theme.Font.Normal,Addon.Theme.Font.Flags 
+        );
+    end
+    Frame.Instructions:SetTextColor(
+        Addon.Theme.Text.Colors.Default.r,
+        Addon.Theme.Text.Colors.Default.g,
+        Addon.Theme.Text.Colors.Default.b,
+        Addon.Theme.Text.Alpha
+    );
 
     return Frame;
 end
