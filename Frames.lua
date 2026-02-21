@@ -563,21 +563,20 @@ Addon.FRAMES.AddAcknowledge = function( self,VarData,Parent )
     local Frame = self:AddMovable( VarData,Parent );
     Frame:SetFrameStrata( 'TOOLTIP' );
 
-    local Text = Frame:CreateFontString( nil,'ARTWORK','GameFontNormalSmall' );
-
     if( VarData.Label ) then
         Frame.Label = Frame:CreateFontString( nil,'ARTWORK','GameFontNormalSmall' );
             Frame.Label:SetTextColor( 
-            Addon.Theme.Background.Colors.Default.r,
-            Addon.Theme.Background.Colors.Default.g,
-            Addon.Theme.Background.Colors.Default.g,
-            Addon.Theme.Background.Alpha
+            Addon.Theme.Text.Colors.Default.r,
+            Addon.Theme.Text.Colors.Default.g,
+            Addon.Theme.Text.Colors.Default.g,
+            Addon.Theme.Text.Alpha
         );
         Frame.Label:SetSize( Frame:GetWidth()/2,0 );
         Frame.Label:SetPoint( 'TOPLEFT',Frame,'TOPLEFT',0,-10 );
         Frame.Label:SetText( VarData.Label );
     end
 
+    local Text = Frame:CreateFontString( nil,'ARTWORK','GameFontNormalSmall' );
     Text:SetTextColor( 
         Addon.Theme.Text.Colors.Default.r,
         Addon.Theme.Text.Colors.Default.g,
@@ -600,6 +599,15 @@ Addon.FRAMES.AddAcknowledge = function( self,VarData,Parent )
     end );
     Frame.Butt:SetPoint( 'topright',Frame,'topright',-10,-10 );
     Frame.Butt:RegisterForClicks( 'AnyDown','AnyUp' );
+
+    Frame.Texture = Frame:CreateTexture();
+    Frame.Texture:SetAllPoints( Frame );
+    Frame.Texture:SetColorTexture( 
+        Addon.Theme.Background.Colors.Default.r,
+        Addon.Theme.Background.Colors.Default.g,
+        Addon.Theme.Background.Colors.Default.g,
+        Addon.Theme.Background.Alpha
+    );
 
     Frame:Show();
 
