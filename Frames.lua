@@ -254,8 +254,17 @@ Addon.FRAMES.AddRange = function( self,VarData,Parent,Handler,Color )
         Color.b,
         Addon.Theme.Text.Alpha
     );
-    Frame.EditBox:Disable();
+    --Frame.EditBox:Disable();
+    Frame.EditBox:SetAutoFocus( false );
+    Frame.EditBox:ClearFocus();
 
+    Frame.EditBox:SetScript( 'OnEnterPressed',function( self )
+        local Value = self:GetText();
+        if( Value ) then
+            self:SetText( Addon:SliderRound( Value,VarData.Step ) );
+            Handler.Set( self.keyValue,Addon:SliderRound( Value,VarData.Step ) );
+        end
+    end );
     Frame:SetScript( 'OnValueChanged',function( self,Value,UserInput )
         --print( 'OnValueChanged',Value,UserInput )
         if( UserInput ) then
