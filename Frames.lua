@@ -261,6 +261,15 @@ Addon.FRAMES.AddRange = function( self,VarData,Parent,Handler,Color )
     Frame.EditBox:SetScript( 'OnEnterPressed',function( self )
         local Value = self:GetText();
         if( Value ) then
+            --[[
+            Addon:Dump( {
+                keyValue = self.keyValue,
+                Value = Value,
+                Step = VarData.Step,
+                RoundedValue = Addon:SliderRound( Value,VarData.Step ),
+                SetFunc = Handler.Set,
+            } )
+            ]]
             self:SetText( Addon:SliderRound( Value,VarData.Step ) );
             Handler.Set( self.keyValue,Addon:SliderRound( Value,VarData.Step ) );
         end
