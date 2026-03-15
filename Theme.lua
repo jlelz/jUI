@@ -1,15 +1,21 @@
 local _,Addon = ...;
 
-local Pink = {
-    r = 255/255,
-    g = 69/255,
-    b = 237/255,
-};
-local Purple = {
-    r = 86/255,
-    g = 9/255,
-    b = 174/255,
-};
+local Pink = {r = 255/255,g = 69/255,b = 237/255,};
+local Green = {r = 0/255,g = 251/255,b = 0/255,};
+local Purple = {r = 86/255,g = 9/255,b = 174/255,};
+local Black = {r = 8/255,g = 8/255,b = 8/255,};
+local Grey = {r = 3/255,g = 3/255,b = 3/255,};
+
+local LightPink = {r = 255/255,g = 173/255,b = 243/255,};
+local LightGreen = {r = 0/255,g = 250/255,b = 176/255};
+local LightPurple = {r = 48/255,g = 30/255,b = 56/255,};
+local LightBlack = {r = 18/255,g = 17/255,b = 17/255,};
+local LightGrey = {r = 161/255,g = 161/255,b = 161/255,};
+
+local Red = {r = 247/255,g = 8/255,b = 8/255,};
+local White = {r = 255/255,g = 255/255,b = 255/255,};
+local Yellow = {r = 237/255,g = 247/255,b = 8/255,};
+
 Addon.Theme = {
     Font = {
         Family = 'Fonts\\FRIZQT__.TTF',
@@ -20,62 +26,30 @@ Addon.Theme = {
     },
     Text = {
         Colors = {
-            Default = {         -- white
-                r = 255/255,
-                g = 255/255,
-                b = 255/255,
-            },
+            Default = White,
             Highlight = Pink,
-            Disabled = {        -- grey
-                r = 3/255,
-                g = 3/255,
-                b = 3/255,
-            },
-            Error = {           -- red
-                r = 247/255,
-                g = 8/255,
-                b = 8/255,
-            },
-            Warn = {            -- yellow
-                r = 237/255,
-                g = 247/255,
-                b = 8/255,
-            },
-            Debug = {           -- grey
-                r = 161/255,
-                g = 161/255,
-                b = 161/255,
-            },
+            Disabled = Grey,
+            Error = Red,
+            Warn = Yellow,
+            Debug = LightGrey,
         },
         Alpha = 0.80,
     },
     Background = {
         Colors = {
-            Default = {           -- black
-                r = 8/255,
-                g = 8/255,
-                b = 8/255,
-            },
+            Default = Black,
         },
         Alpha = 0.89,
     },
     Foreground = {
         Colors = {
-            Default = {           -- black
-                r = 18/255,
-                g = 17/255,
-                b = 17/255,
-            },
+            Default = LightBlack,
         },
         Alpha = 0.86,
     },
     Seperator = {
         Colors = {
-            Default = {         -- purple
-                r = 48/255,
-                g = 30/255,
-                b = 56/255,
-            },
+            Default = LightPurple,
         },
         Alpha = 0.90,
     },
