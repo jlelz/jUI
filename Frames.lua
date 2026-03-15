@@ -186,10 +186,13 @@ Addon.FRAMES.AddRange = function( self,VarData,Parent,Handler,Color )
     Frame:SetValueStep( VarData.Step );
     Frame:SetOrientation( VarData.Orientation or 'HORIZONTAL' );
 
-    Frame.minValue,Frame.maxValue = Frame:GetMinMaxValues();
-
-    Frame.Low:SetText( VarData.KeyPairs.Low.Value );
-    Frame.High:SetText( VarData.KeyPairs.High.Value );
+    local Start = 1;
+    local Precision = 4;
+    Frame.MinValue,Frame.MaxValue = Frame:GetMinMaxValues();
+    local LowVal = string.sub( tostring( Frame.MinValue ),Start,Precision );
+    Frame.Low:SetText( LowVal );
+    local HighVal = string.sub( tostring( Frame.MaxValue ),Start,Precision );
+    Frame.High:SetText( HighVal );
 
     local Point,RelativeFrame,RelativePoint,X,Y = Frame.Low:GetPoint();
     Frame.Low:SetPoint( Point,RelativeFrame,RelativePoint,X+5,Y-5 );
