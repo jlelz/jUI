@@ -2,46 +2,91 @@
 -- @todo
 local AddonName,Addon = ...;
 
+-- Blizz Code Relies on CURRENT_CHAT_FRAME_ID
+-- /Interface/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua
+local SelectedFrame = FCFDock_GetSelectedWindow( GENERAL_CHAT_DOCK );
+if( SelectedFrame ) then
+    CURRENT_CHAT_FRAME_ID = SelectedFrame:GetID();
+else
+    CURRENT_CHAT_FRAME_ID = DEFAULT_CHAT_FRAME:GetID();
+end
+
 Addon.FRAMES = CreateFrame( 'Frame' );
 
 Addon.FRAMES.Debug = function( self,... )
+    local TextColor = Addon.Theme.Text.Colors.Default;
+    local DebugColor = Addon.Theme.Text.Colors.Debug;
+
     local Prefix = CreateColor(
-        Addon.Theme.Text.Colors.Debug.r,
-        Addon.Theme.Text.Colors.Debug.g,
-        Addon.Theme.Text.Colors.Debug.b
+        DebugColor.r,
+        DebugColor.g,
+        DebugColor.b
     ):WrapTextInColorCode( AddonName..' Debug' );
 
-    _G[ 'DEFAULT_CHAT_FRAME' ]:AddMessage( string.join( ' ', Prefix, ... ) );
+    local Message = CreateColor(
+        TextColor.r,
+        TextColor.g,
+        TextColor.b
+    ):WrapTextInColorCode( string.join( ',',... ) );
+
+    FCF_GetCurrentChatFrame():AddMessage( string.join( ' ', Prefix,Message ) );
 end
 
 Addon.FRAMES.Notify = function( self,... )
+    local TextColor = Addon.Theme.Text.Colors.Default;
+    local HighlightColor = Addon.Theme.Text.Colors.Highlight;
+
     local Prefix = CreateColor(
-        Addon.Theme.Text.Colors.Highlight.r,
-        Addon.Theme.Text.Colors.Highlight.g,
-        Addon.Theme.Text.Colors.Highlight.b
+        HighlightColor.r,
+        HighlightColor.g,
+        HighlightColor.b
     ):WrapTextInColorCode( AddonName );
 
-    _G[ 'DEFAULT_CHAT_FRAME' ]:AddMessage( string.join( ' ', Prefix, ... ) );
+    local Message = CreateColor(
+        TextColor.r,
+        TextColor.g,
+        TextColor.b
+    ):WrapTextInColorCode( string.join( ',',... ) );
+
+    FCF_GetCurrentChatFrame():AddMessage( string.join( ' ', Prefix,Message ) );
 end
 
 Addon.FRAMES.Warn = function( self,... )
+    local TextColor = Addon.Theme.Text.Colors.Default;
+    local WarnColor = Addon.Theme.Text.Colors.Warn;
+
     local Prefix = CreateColor(
-        Addon.Theme.Text.Colors.Warn.r,
-        Addon.Theme.Text.Colors.Warn.g,
-        Addon.Theme.Text.Colors.Warn.b
+        WarnColor.r,
+        WarnColor.g,
+        WarnColor.b
     ):WrapTextInColorCode( AddonName );
 
-    _G[ 'DEFAULT_CHAT_FRAME' ]:AddMessage( string.join( ' ', Prefix, ... ) );
+    local Message = CreateColor(
+        TextColor.r,
+        TextColor.g,
+        TextColor.b
+    ):WrapTextInColorCode( string.join( ',',... ) );
+
+    FCF_GetCurrentChatFrame():AddMessage( string.join( ' ', Prefix,Message ) );
 end
 
 Addon.FRAMES.Error = function( self,... )
+    local TextColor = Addon.Theme.Text.Colors.Default;
+    local ErrorColor = Addon.Theme.Text.Colors.Error;
+
     local Prefix = CreateColor(
-        Addon.Theme.Text.Colors.Error.r,
-        Addon.Theme.Text.Colors.Error.g,
-        Addon.Theme.Text.Colors.Error.b
+        ErrorColor.r,
+        ErrorColor.g,
+        ErrorColor.b
     ):WrapTextInColorCode( AddonName );
 
-    _G[ 'DEFAULT_CHAT_FRAME' ]:AddMessage( string.join( ' ', Prefix, ... ) );
+    local Message = CreateColor(
+        TextColor.r,
+        TextColor.g,
+        TextColor.b
+    ):WrapTextInColorCode( string.join( ',',... ) );
+
+    FCF_GetCurrentChatFrame():AddMessage( string.join( ' ', Prefix,Message ) );
 end
 
 Addon.FRAMES.AddLocked = function( self,VarData,Parent )
@@ -592,25 +637,27 @@ Addon.FRAMES.AddAcknowledge = function( self,VarData,Parent )
             Addon.Theme.Text.Colors.Default.g,
             Addon.Theme.Text.Alpha
         );
-        Frame.Label:SetSize( Frame:GetWidth()/2,0 );
-        Frame.Label:SetPoint( 'TOPLEFT',Frame,'TOPLEFT',0,-10 );
+        Frame.Label:SetSize( Frame:GetWidth()-10,20 );
+        Frame.Label:SetNonSpaceWrap( true );
+        Frame.Label:SetWordWrap( true );
+        Frame.Label:SetPoint( 'TOPLEFT',Frame,'TOPLEFT',10,-10 );
         Frame.Label:SetText( VarData.Label );
     end
 
-    local Text = Frame:CreateFontString( nil,'ARTWORK','GameFontNormalSmall' );
-    Text:SetTextColor( 
+    Frame.Text = Frame:CreateFontString( nil,'ARTWORK','GameFontNormalSmall' );
+    Frame.Text:SetTextColor( 
         Addon.Theme.Text.Colors.Default.r,
         Addon.Theme.Text.Colors.Default.g,
         Addon.Theme.Text.Colors.Default.g,
         Addon.Theme.Text.Alpha
     );
-    Text:SetSize( Frame:GetWidth()-10,0 );
-    Text:SetJustifyH( 'CENTER' );
-    Text:SetJustifyV( 'MIDDLE' );
-    Text:SetNonSpaceWrap( true );
-    Text:SetWordWrap( true );
-    Text:SetPoint( 'CENTER' );
-    Text:SetText( VarData.Value );
+    Frame.Text:SetSize( Frame:GetWidth()-10,0 );
+    Frame.Text:SetJustifyH( 'CENTER' );
+    Frame.Text:SetJustifyV( 'MIDDLE' );
+    Frame.Text:SetNonSpaceWrap( true );
+    Frame.Text:SetWordWrap( true );
+    Frame.Text:SetPoint( 'CENTER' );
+    Frame.Text:SetText( VarData.Value );
 
     Frame.Butt = CreateFrame( 'Button',nil,Frame,'UIPanelButtonTemplate' );
     Frame.Butt:SetSize( 32,32 );

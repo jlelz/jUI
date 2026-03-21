@@ -1,6 +1,7 @@
 local _,Addon = ...;
 
 Addon.Minify = function( self,Input )
+  Input = tostring( Input );
   if( Input and Input.gsub ) then
     return strlower( Input:gsub( '%W', '' ) );
   end
