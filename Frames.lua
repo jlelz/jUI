@@ -1,15 +1,4 @@
--- https://warcraft.wiki.gg/wiki/Patch_11.0.0/API_changes
--- @todo
 local AddonName,Addon = ...;
-
--- Blizz Code Relies on CURRENT_CHAT_FRAME_ID
--- /Interface/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua
-local SelectedFrame = FCFDock_GetSelectedWindow( GENERAL_CHAT_DOCK );
-if( SelectedFrame ) then
-    CURRENT_CHAT_FRAME_ID = SelectedFrame:GetID();
-else
-    CURRENT_CHAT_FRAME_ID = DEFAULT_CHAT_FRAME:GetID();
-end
 
 Addon.FRAMES = CreateFrame( 'Frame' );
 
@@ -29,7 +18,10 @@ Addon.FRAMES.Debug = function( self,... )
         TextColor.b
     ):WrapTextInColorCode( string.join( ',',... ) );
 
-    FCF_GetCurrentChatFrame():AddMessage( string.join( ' ', Prefix,Message ) );
+    local Frame = _G[ 'ChatFrame'..1 ];
+    if( Frame ) then
+        Frame:AddMessage( string.join( ' ', Prefix,Message ) );
+    end
 end
 
 Addon.FRAMES.Notify = function( self,... )
@@ -48,7 +40,10 @@ Addon.FRAMES.Notify = function( self,... )
         TextColor.b
     ):WrapTextInColorCode( string.join( ',',... ) );
 
-    FCF_GetCurrentChatFrame():AddMessage( string.join( ' ', Prefix,Message ) );
+    local Frame = _G[ 'ChatFrame'..1 ];
+    if( Frame ) then
+        Frame:AddMessage( string.join( ' ', Prefix,Message ) );
+    end
 end
 
 Addon.FRAMES.Warn = function( self,... )
@@ -67,7 +62,10 @@ Addon.FRAMES.Warn = function( self,... )
         TextColor.b
     ):WrapTextInColorCode( string.join( ',',... ) );
 
-    FCF_GetCurrentChatFrame():AddMessage( string.join( ' ', Prefix,Message ) );
+    local Frame = _G[ 'ChatFrame'..1 ];
+    if( Frame ) then
+        Frame:AddMessage( string.join( ' ', Prefix,Message ) );
+    end
 end
 
 Addon.FRAMES.Error = function( self,... )
@@ -86,7 +84,10 @@ Addon.FRAMES.Error = function( self,... )
         TextColor.b
     ):WrapTextInColorCode( string.join( ',',... ) );
 
-    FCF_GetCurrentChatFrame():AddMessage( string.join( ' ', Prefix,Message ) );
+    local Frame = _G[ 'ChatFrame'..1 ];
+    if( Frame ) then
+        Frame:AddMessage( string.join( ' ', Prefix,Message ) );
+    end
 end
 
 Addon.FRAMES.AddLocked = function( self,VarData,Parent )
