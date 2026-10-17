@@ -308,8 +308,14 @@ Addon.FRAMES.AddRange = function( self,VarData,Parent,Handler,Color )
     Frame.EditBox:ClearFocus();
 
     Frame.EditBox:SetScript( 'OnEnterPressed',function( self )
-        local Value = self:GetText();
+        local Value = tonumber( self:GetText() );
         if( Value ) then
+            local Parent = self:GetParent();
+
+            local Rounded = Addon:SliderRound( Value,VarData.Step );
+            local MinValue,MaxValue = Parent:GetMinMaxValues();
+            Rounded = math.max( MinValue,math.min( MaxValue,Rounded ) );
+
             --[[
             Addon:Dump( {
                 keyValue = self.keyValue,
@@ -319,10 +325,34 @@ Addon.FRAMES.AddRange = function( self,VarData,Parent,Handler,Color )
                 SetFunc = Handler.Set,
             } )
             ]]
-            self:SetText( Addon:SliderRound( Value,VarData.Step ) );
-            Handler.Set( self.keyValue,Addon:SliderRound( Value,VarData.Step ) );
+            self:SetText( Rounded );
+            Handler.Set( self.keyValue,Rounded );
+            Parent:SetValue( Rounded );
+            self:ClearFocus();
         end
     end );
+
+    --[[
+    Frame:EnableMouseWheel( true );
+    Frame:SetScript( 'OnMouseWheel',function( self,Delta )
+        if( self:IsEnabled() ) then
+            local Value = tonumber( self:GetValue() );
+            if( Value ) then
+                local TreatAsMouseEvent = true;
+                local Step = self:GetValueStep() or 1;
+                -- Delta is 1 for scrolling up, -1 for scrolling down
+                local NewValue = Value + ( Delta * Step );
+                
+                -- Clamp values within bounds
+                local MinValue,MaxValue = self:GetMinMaxValues();
+                NewValue = math.max( MinValue,math.min( MaxValue,NewValue ) );
+                
+                self:SetValue( NewValue,TreatAsMouseEvent );
+            end
+        end
+    end );
+    ]]
+
     Frame:SetScript( 'OnValueChanged',function( self,Value,UserInput )
         --print( 'OnValueChanged',Value,UserInput )
         if( UserInput ) then
