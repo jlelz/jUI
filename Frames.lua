@@ -517,6 +517,7 @@ Addon.FRAMES.AddMultiEdit = function( self,VarData,Parent,Handler )
     Frame.Input:DisableDrawLayer( 'BACKGROUND' );
     Frame.Input:SetPoint( 'topleft',Frame,'topleft',10,-10 );
     Frame.Input:SetAutoFocus( false );
+    Frame.Input:ClearFocus();
     Frame.Input:SetMultiLine( true );
     Frame.Input:SetCursorPosition( 0 );
     Frame.Input:SetTextInsets( 0,0,3,3 );
@@ -721,8 +722,8 @@ Addon.FRAMES.AddSearch = function( self,VarData,Parent )
     local Frame = CreateFrame( 'EditBox',Key..'Search',Parent or UIParent,'SearchBoxTemplate' );
     Frame:SetSize( 145,20 );
     Frame.clearButton:Hide();
-    Frame:ClearFocus();
     Frame:SetAutoFocus( false );
+    Frame:ClearFocus();
 
     -- Input
     local SearchFont = Frame:GetFontObject();
